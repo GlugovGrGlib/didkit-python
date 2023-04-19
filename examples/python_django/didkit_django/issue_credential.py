@@ -19,29 +19,29 @@ async def issueCredential(request):
         "@context": [
             "https://www.w3.org/2018/credentials/v1",
             "https://www.w3.org/2018/credentials/examples/v1",
+            "https://w3id.org/security/suites/ed25519-2020/v1"
         ],
         "type": ["VerifiableCredential"],
-        "issuer": did_key,
+        "issuer": {
+            "id": did_key,
+        },
         "issuanceDate": issuance_date.isoformat() + "Z",
         "expirationDate": expiration_date.isoformat() + "Z",
         "credentialSubject": {
-            "@context": [
-                {
-                    "username": "https://schema.org/Text"
-                }
-            ],
             "id": "urn:uuid:" + str(uuid.uuid4()),
-            "username": "Someone",
         },
     }
 
     didkit_options = {
-        "proofPurpose": "assertionMethod",
-        "verificationMethod": verification_method,
+        # "proofPurpose": "assertionMethod",
+        # "verificationMethod": verification_method,
+        "type": "Ed25519Signature2020",
+        # "challenge": 
     }
 
     credential = await didkit.issue_credential(
         json.dumps(credential),
         json.dumps(didkit_options),
         key)
+    await didkit.verify_credential(credential, '{}')
     return json.loads(credential)

@@ -1,0 +1,30 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1",
+    "https://w3id.org/security/suites/ed25519-2020/v1"
+  ],
+  "credentialSubject": {
+    "@context": [
+      {
+        "username": "https://schema.org/Text"
+      }
+    ],
+    "id": "urn:uuid:108f4adb-3ed6-43de-bcbd-f0b905ec5cc9",
+    "username": "Someone"
+  },
+  "expirationDate": "2023-10-03T21:27:33Z",
+  "id": "urn:uuid:5db33359-2897-44ee-ab2b-6e0ae38ad823",
+  "issuanceDate": "2023-04-18T21:27:33Z",
+  "issuer": "did:key:z6MkmexGsK7kNS36KXsNFtqzEXsMiaN4j1WhQEikUTaDydct",
+  "proof": {
+    "created": "2023-04-18T21:27:33.013Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "z66nb1qr11vVMdajmb98sdEwZN1QDbuXYU47dRExmnYGb7yTvh9RvmxC47uZMhP1fviU92sPuRWeSq5AckTBdXBLd",
+    "type": "Ed25519Signature2020",
+    "verificationMethod": "did:key:z6MkmexGsK7kNS36KXsNFtqzEXsMiaN4j1WhQEikUTaDydct#z6MkmexGsK7kNS36KXsNFtqzEXsMiaN4j1WhQEikUTaDydct"
+  },
+  "type": [
+    "VerifiableCredential"
+  ]
+}
