@@ -1,90 +1,31 @@
 name: CD
 
-on:
-  push:
-    tags:
-      - v*
-  pull_request:
-    branches:
-      - 'main'
-
+on: push
 
 jobs:
-  macos:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        target: [x64, aarch64]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build wheels
-        uses: messense/maturin-action@v1
-        with:
-          target: ${{ matrix.target }}
-          args: --release -o dist --find-interpreter
-      - name: Upload wheels
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: dist
-
-  windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        target: [x64, x86]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build wheels
-        uses: messense/maturin-action@v1
-        with:
-          target: ${{ matrix.target }}
-          args: --release -o dist --find-interpreter
-      - name: Upload wheels
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: dist
-
   linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        python-version: [3.8, 3.9, 3.10, 3.11, 3.12]
         target: [x86_64, i686, aarch64, armv7]
     steps:
-    - uses: actions/checkout@v2
-    - name: Build Wheels
-      uses: messense/maturin-action@v1
-      env:
-        PYO3_CROSS_LIB_DIR: /opt/python/cp38-cp38/lib
-      with:
-        target: ${{ matrix.target }}
-        manylinux: auto
-        args: --release -o dist --find-interpreter
-    - name: Upload wheels
-      uses: actions/upload-artifact@v2
-      with:
-        name: wheels
-        path: dist
-
-  # TODO Add pypy
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    if: "startsWith(github.ref, 'refs/tags/')"
-    needs: [ macos, linux, windows]
-    steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build Wheels
+        uses: messense/maturin-action@v1
+        env:
+          # Update this based on the Python version
+          PYO3_CROSS_LIB_DIR: /opt/python/cp${{ matrix.python-version }}-cp${{ matrix.python-version }}/lib
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release -o dist --find-interpreter
+      - name: Upload wheels
+        uses: actions/upload-artifact@v2
         with:
           name: wheels
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Publish to PyPi
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install --upgrade twine
-          twine upload --skip-existing *
+          path: dist
