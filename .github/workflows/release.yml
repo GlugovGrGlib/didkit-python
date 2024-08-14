@@ -17,9 +17,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Build Wheels
         uses: messense/maturin-action@v1
-        env:
-          # Update this based on the Python version
-          PYO3_CROSS_LIB_DIR: /opt/python/cp${{ matrix.python-version }}-cp${{ matrix.python-version }}/lib
         with:
           target: ${{ matrix.target }}
           manylinux: auto
