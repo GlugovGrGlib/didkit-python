@@ -1,6 +1,7 @@
 [project]
-name = "didkit"
-requires-python = ">=3.7"
+name = "openedx-didkit"
+description = "Fork of spruceid/didkit-python with added support of Verifiable Credentials v2.0 data model. Library for Verifiable Credentials and Decentralized Identifiers."
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
@@ -8,25 +9,31 @@ classifiers = [
     "Topic :: Security",
 ]
 
-# [project.urls]
-# homepage = "https://github.com/spruceid/didkit-python"
-# documentation = "https://github.com/spruceid/didkit-python"
-# repository = "https://github.com/spruceid/didkit-python"
+[project.urls]
+Homepage = "https://github.com/openedx/didkit-python"
+Source = "https://github.com/openedx/didkit-python"
+Issues = "https://github.com/openedx/didkit-python/issues"
+Upstream = "https://github.com/spruceid/didkit-python"
 
 [tool.poetry]
-name = "didkit"
+name = "openedx-didkit"
 version = "0.1.0"
-description = "Library for Verifiable Credentials and Decentralized Identifiers."
+description = "Fork of spruceid/didkit-python with added support of Verifiable Credentials v2.0 data model. Library for Verifiable Credentials and Decentralized Identifiers."
 authors = [ "Spruce Systems, Inc." ]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 
-[tool.poetry.dev-dependencies]
-maturin = "^0.14.15"
+[tool.poetry.group.dev.dependencies]
+maturin = "^1.0"
 pytest = "^7.2.2"
 pytest-asyncio = "^0.20.3"
 
 [build-system]
-requires = ["maturin>=0.14,<0.15"]
+requires = ["maturin>=1.0,<2"]
 build-backend = "maturin"
+
+[tool.maturin]
+# Critical - This keeps the Python import as 'didkit'
+module-name = "didkit"
