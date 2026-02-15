@@ -1,5 +1,6 @@
 [project]
 name = "openedx-didkit"
+dynamic = ["version"]
 description = "Fork of spruceid/didkit-python with added support of Verifiable Credentials v2.0 data model. Library for Verifiable Credentials and Decentralized Identifiers."
 requires-python = ">=3.10"
 classifiers = [
@@ -35,5 +36,7 @@ requires = ["maturin>=1.0,<2"]
 build-backend = "maturin"
 
 [tool.maturin]
-# Critical - This keeps the Python import as 'didkit'
-module-name = "didkit"
+# Include the didkit Python package
+python-packages = ["didkit"]
+# Put the compiled extension inside the didkit package as didkit.didkit
+module-name = "didkit.didkit"
