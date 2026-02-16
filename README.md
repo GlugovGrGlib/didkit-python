@@ -1,7 +1,8 @@
 > [!IMPORTANT]
-> As we do not use the DIDKit bindings internally anymore, we have decided to archive their respective repositories. If you are looking for alternatives, our Rust library [`ssi`](https://github.com/spruceid/ssi/) (on which DIDKit was built) is still in active deployment, and we have new mobile-focused libraries with [`sprucekit-mobile`](https://github.com/spruceid/sprucekit-mobile). And as always, you are welcome to fork our repositories.
+> SpruceID does not use the DIDKit bindings internally anymore, and they decided to archive their respective repositories. Considering the Open edX project dependency on didkit-python bindings for the
+verifiable credentials support and requires VC 2.0 support, a decision was made to fork the solution, implement minor module updates and publish under the name openedx-didkit as a drop-in replacement for didkit PyPI package.
 
-[![PyPI version](https://badge.fury.io/py/didkit.svg)](https://badge.fury.io/py/didkit)
+[![PyPI version](https://badge.fury.io/py/openedx-didkit.svg)](https://badge.fury.io/py/openedx-didkit)
 
 Check out the DIDKit documentation [here](https://spruceid.dev/docs/didkit/).
 
@@ -16,7 +17,7 @@ core functionality.
 
 ## Installation and Usage
 
-DIDKit is available [on PyPI](https://pypi.org/project/didkit/).
+DIDKit is available [on PyPI](https://pypi.org/project/openedx-didkit/).
 
 You can install it globally with:
 ```bash
@@ -30,6 +31,7 @@ $ pip install -U didkit
 ```bash
 $ maturin build
 ```
+
 > You can install `maturin` with `pip install maturin`.
 
 Now the `wheel` should be in the [target directory](../../target/wheel).
@@ -54,19 +56,3 @@ poetry run maturin develop
 poetry run pytest
 ```
 
-## Migration
-
-### 0.2 to 0.3
-Functions have kept the same signatures, but some have become asynchronous. You
-will need to start using
-[`asyncio`](https://docs.python.org/3/library/asyncio.html) if it is not already
-the case.
-
-## Maturity Disclaimer
-
-Please note: this readme documents an early-stage open-source product ported
-manually to python, and we are still incorporating feedback from our first
-comprehensive third-party code audit. These artefacts are presented as
-functional "betas" for experimentation and to show the direction of the
-project (inviting proposals for changes of direction, even!). They are not,
- however, intended for transacting real-world business yet.
